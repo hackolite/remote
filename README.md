@@ -1,2 +1,2 @@
 # remote
-A decorator allowing to excute your function  remotely, asynchronely or not on one serverand  on plenty servers
+A decorator allowing to execute your function remotely or not, asynchronely or not on one server or  on plenty servers
