@@ -1,2 +1,2 @@
 # remote
-A python decorator allowing to execute your function remotely or not, asynchronely or not on one server or  on plenty servers
+A python decorator allowing to execute your function remotely or not, asynchronely or not on one server or  on plenty servers, in parralle. With a simple code which pickle your function.
