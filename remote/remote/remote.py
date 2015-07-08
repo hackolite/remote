@@ -99,6 +99,7 @@ class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
         res = remfunc(*rec[2], **rec[3])
         res_pack = dill.dumps(res)
         self.request.sendall(res_pack)
+        self.server.shutdown()
 
 
 
