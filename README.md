@@ -20,7 +20,7 @@ Install the package on client and remote.
 
 
 
-    @remoteFunction('', '', '')
+    @remoteFunction()
     def toto(path):
         result = os.listdir(path)
         dic_tmp = {
@@ -39,5 +39,5 @@ Install the package on client and remote.
 
 
     if __name__ == "__main__":
-        ret = toto('.')
+        ret = toto('.', remote=('host', 'user', 'password'))
         print ret
