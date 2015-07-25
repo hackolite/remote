@@ -29,12 +29,47 @@ __maintainer__ = "Loic.laureote"
 __email__ = "laureote-loic@hotmail.com"
 __status__ = "Developpement"
 
+class SshClient:
+
+    TIMEOUT = 4
+
+    def __init__(self, host, port, username, password, key=None, passphrase=None):
+        self.username = username
+        self.password = password
+        self.client = paramiko.SSHClient()
+        self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        if key is not None:
+            key = paramiko.RSAKey.from_private_key(StringIO(key), password=passphrase)
+        self.client.connect(host, port, username=username, password=password, pkey=key, timeout=self.TIMEOUT)
+
+    def close(self):
+        if self.client is not None:
+            self.client.close()
+            self.client = None
+
+    def execute(self, command, sudo=False, feed_password=False):
+        if sudo and self.username != "root":
+            command = "sudo -S -p '' %s" % command
+            feed_password = self.password is not None and len(self.password) > 0
+        stdin, stdout, stderr = self.client.exec_command(command)
+
+        if feed_password:
+            stdin.write(self.password + "\n")
+            stdin.flush()
+        return {'out': stdout.readlines(),
+                'err': stderr.readlines(),
+                'retval': stdout.channel.recv_exit_status()}
+
+
 
 def start_remote(HOST,USER,PASSWORD, PORT):
-        client = paramiko.SSHClient()
-        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        client.connect(HOST, 22, username=USER, password=PASSWORD)
-        cmd = """python -c 'from remote.remote import start_server;start_server("%s", %s)' """ % (HOST, PORT,)  
+        #client = paramiko.SSHClient()
+        #client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        #client.connect(HOST, 22, username=USER, password=PASSWORD)
+        #cmd = """python -c 'from remote.remote import start_server;start_server("%s", %s)' """ % (HOST, PORT,)  
+        client = SshClient(HOST, 22, USER, PASSWORD)
+        cmd = """python -c 'from remote.remote import start_server;start_server("%s", %s)' """ % (HOST, PORT)
+        ret = client.execute(cmd, sudo = True, feed_password=True)        
         print cmd
                 
         print stderr.readlines(),stdout.readlines()
