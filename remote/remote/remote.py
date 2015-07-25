@@ -30,8 +30,6 @@ __email__ = "laureote-loic@hotmail.com"
 __status__ = "Developpement"
 
 
-
-<<<<<<< HEAD
 def start_remote(HOST,USER,PASSWORD, PORT):
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -40,8 +38,7 @@ def start_remote(HOST,USER,PASSWORD, PORT):
         print cmd
                 
         print stderr.readlines(),stdout.readlines()
-=======
->>>>>>> de5797cd05f945326b1aa14946fb1c75142c95fe
+
 
 def encryption():
     """
