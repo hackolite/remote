@@ -24,7 +24,7 @@ def start_remote(HOST,USER,PASSWORD, PORT):
         client.connect(HOST, 22, username=USER, password=PASSWORD)
         cmd = """python -c 'from remote.remote import start_server;start_server("%s", %s)' """ % (HOST, PORT,)  
         print cmd
-        stdin, stdout, stderr = client.exec_command(cmd)
+                
         print stderr.readlines(),stdout.readlines()
 
 def encryption():
@@ -58,7 +58,7 @@ def remoteFunction(HOST, USER,PASSWORD):
             threads.append(t)
             t.daemon = True
             t.start()
-            time.sleep(0.9)
+            time.sleep(2)
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.connect((HOST, PORT))
             modules_list = sys.modules.keys()
@@ -106,10 +106,11 @@ class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     pass
 
 
-@remoteFunction('localhost', '', '')
+@remoteFunction('127.0.0.1', 'loic', '')
 def toto(path):
     ret = os.listdir(path)
     return ret
 
 
-toto('.')
+if __name__ == '__main__':
+	toto('.')
