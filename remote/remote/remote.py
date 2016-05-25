@@ -197,7 +197,6 @@ class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     pass
 
 
-<<<<<<< HEAD
 @remoteFunction('127.0.0.1', 'loic', '')
 def toto(path):
     ret = os.listdir(path)
@@ -206,8 +205,4 @@ def toto(path):
 
 if __name__ == '__main__':
 	toto('.')
-=======
 
-if __name__ == '__main__':
-    print toto('.')
->>>>>>> de5797cd05f945326b1aa14946fb1c75142c95fe
